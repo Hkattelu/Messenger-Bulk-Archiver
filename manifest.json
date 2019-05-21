@@ -10,11 +10,17 @@
     "page_action": {
       "default_popup": "popup.html",
       "default_icon": {
-        "16": "images/icon16.png",
-        "32": "images/icon32.png",
-        "48": "images/icon48.png",
-        "128": "images/icon128.png"
+        "16": "images/icon16_main.png",
+        "32": "images/icon32_main.png",
+        "48": "images/icon48_main.png",
+        "128": "images/icon128_main.png"
       }
+    },
+    "icons": {
+      "16": "images/icon16_main.png",
+      "32": "images/icon32_main.png",
+      "48": "images/icon48_main.png",
+      "128": "images/icon128_main.png"
     },
     "manifest_version": 2
   }
