@@ -1,0 +1,9 @@
+body {
+  height: 100%;
+  padding: 10px;
+}
+
+.btn {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
