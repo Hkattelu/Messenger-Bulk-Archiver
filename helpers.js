@@ -14,7 +14,9 @@ function openConversationActionMenuForConversation(index) {
 function archiveConversation(index) {
   openConversationActionMenuForConversation(index);
   const menuOptions = Array.from(getConversationActionMenu().children);
-  menuOptions.find((el) => el.innerText === 'Archive').click();
+
+  // This should be the Archive button
+  menuOptions[3].click();
 }
 
 function archiveConversationsInView() {
