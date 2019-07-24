@@ -12,7 +12,9 @@ You should install this extension and if:
   * You chat too much, and want to make it harder for yourself to message others
   * You want to clean up years of conversations without having to manually archive
 
-[View this extension in the Chrome web store](https://chrome.google.com/webstore/detail/messenger-bulk-archiver/iohchpnpecckgjpopcbndbdgcgkbkjmn?hl=en&gl=US)
+In order to install the install, download this repo and go [here](chrome://extensions).
+Enable developer mode and load the folder containing this code as an unpacked extension.
+You should then be able to run it on messenger.com.
 
 ## Feature Backlog
 
