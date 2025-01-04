@@ -1,39 +1,54 @@
-function getConversationActionMenu() {
-  return document.querySelector('.uiContextualLayer').getElementsByTagName('ul')[0];
+function getConversationActionMenuItems() {
+  return document.querySelectorAll('div[role="menu"] [role="menuitem"]');
 }
 
 function getConversationList() {
-  return document.querySelector('[aria-label="Conversation List"]');
+  return document.querySelector('div[aria-label="Chats"]').querySelectorAll('[role=row]');
 }
 
 function openConversationActionMenuForConversation(index) {
-  getConversationList().children[index].focus();
-  document.querySelector('[aria-label="Conversation actions"]').click();
+  const chatItem = getConversationList()[index];
+
+  const event = new MouseEvent('mouseover', {bubbles: true, cancelable: true});
+  chatItem.dispatchEvent(event);
+
+  let resolver = () => {};
+  const menuOpenedPromise = new Promise((resolve) => {
+    resolver = resolve;
+  })
+
+  setTimeout(() => {
+    chatItem.querySelector('div[aria-label="Menu"]').click();
+    setTimeout(resolver, 100);
+  }, 100);
+
+  return menuOpenedPromise;
 }
 
-function archiveConversation(index) {
-  openConversationActionMenuForConversation(index);
-  const menuOptions = Array.from(getConversationActionMenu().children);
+async function archiveConversation(index) {
+  await openConversationActionMenuForConversation(index);
+  const menuOptions = Array.from(getConversationActionMenuItems());
 
-  // This should be the Archive button
-  menuOptions[3].click();
-}
-
-function archiveConversationsInView() {
-  const numInView = getConversationList().children.length;
-  for (var i = 0; i < numInView; i++) {
-    archiveConversation(i);
+  // We will target based on the archive icon svg path.
+  const archiveButton = menuOptions.find(el => el.querySelector('[d="M8 7.5a1 1 0 00-1 1V10a1 1 0 001 1h20a1 1 0 001-1V8.5a1 1 0 00-1-1H8z"'));
+  if (archiveButton) {
+    archiveButton.click();
   }
+
+  let resolver = () => {};
+  const chatArchivedPromise = new Promise((resolve) => {
+    resolver = resolve;
+  })
+  setTimeout(resolver, 75);
+  return chatArchivedPromise;
 }
 
 async function archiveAllConversations() {
-  var conversationList = getConversationList();
-  while (conversationList.children.length > 0) {
-    // Clear 5, then scroll to the top of the list, then repeat
-    for (var i = 0; i < 5; i++) {
-      archiveConversation(i);
-    }
-    document.querySelector('.uiScrollableAreaContent').scrollIntoView();
+  let conversationList = getConversationList();
+  while (conversationList.length > 0) {
+    conversationList[0].scrollIntoView();
+    await archiveConversation(0);
+
     conversationList = getConversationList();
   }
 }
