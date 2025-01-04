@@ -2,12 +2,9 @@
     "name": "Messenger Bulk Archiver",
     "version": "1.0",
     "description": "An extension that makes it easy to bulk archive chats on Facebook Messenger",
-    "permissions": ["declarativeContent", "activeTab"],
-    "background": {
-      "scripts": ["background.js"],
-      "persistent": false
-    },
-    "page_action": {
+    "permissions": ["activeTab", "scripting"],
+    "host_permissions": ["*://www.messenger.com/*"],
+    "action": {
       "default_popup": "popup.html",
       "default_icon": {
         "16": "images/icon_main_16.png",
@@ -22,5 +19,5 @@
       "64": "images/icon_main_64.png",
       "128": "images/icon_main_128.png"
     },
-    "manifest_version": 2
+    "manifest_version": 3
   }

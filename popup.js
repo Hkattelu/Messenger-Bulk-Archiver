@@ -3,15 +3,30 @@ window.addEventListener('load', function(event) {
     {active: true, currentWindow: true},
     function(tabs) {
       // Load helper functions
-      chrome.tabs.executeScript(tabs[0].id, {file: 'helpers.js'});
+      chrome.scripting.executeScript({
+        target: { tabId: tabs[0].id },
+        files: ['helpers.js']
+      });
+      
       document.getElementById('archiveFirst').onclick = function(element) {
-          chrome.tabs.executeScript(tabs[0].id, {code: 'archiveConversation(0)'});
+        chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          func: () => archiveConversation(0)
+        });
       };
+      
       document.getElementById('archiveBatch').onclick = function(element) {
-          chrome.tabs.executeScript(tabs[0].id, {code: 'archiveConversationsInView()'});
+        chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          func: () => archiveConversationsInView()
+        });
       };
+      
       document.getElementById('archiveAll').onclick = function(element) {
-          chrome.tabs.executeScript(tabs[0].id, {code: 'archiveAllConversations()'});
+        chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          func: () => archiveAllConversations()
+        });
       };
     }
   );
