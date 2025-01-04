@@ -12,14 +12,19 @@ You should install this extension and if:
   * You chat too much, and want to make it harder for yourself to message others
   * You want to clean up years of conversations without having to manually archive
 
-In order to install the install, download this repo and go [here](chrome://extensions).
-Enable developer mode and load the folder containing this code as an unpacked extension.
-You should then be able to run it on messenger.com.
+In order to install the extension, head on over to the chrome extension store and
+download it [here](https://chromewebstore.google.com/search/messenger%20bulk%20archive);
+
+On messenger.com, you should then be able to click on the extension and choose an archive option.
+
+## Un-archiving
+
+You can actually load up the "archived chats" page on messenger and run the extension
+to un-archive chats as well.
 
 ## Feature Backlog
 
   * Create a menu that to select conversations to NOT archive
-  * Create a tool to bulk un-archive
   * Implement Archive All chats in messenger history into one button
 
 ## Issues

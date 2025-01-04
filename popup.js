@@ -1,20 +1,24 @@
-window.addEventListener('load', (event) => {
+window.addEventListener('load', (evnt) => {
   chrome.tabs.query(
-    {active: true, currentWindow: true}, (tabs) => {
+    { active: true, currentWindow: true }, (tabs) => {
       // Load helper functions
       chrome.scripting.executeScript({
         target: { tabId: tabs[0].id },
         files: ['helpers.js']
       });
-      
-      document.getElementById('archive-first').addEventListener('click', (element) => {
+
+    const isArchivePage = tabs[0].url.includes('archived');
+    document.getElementById('archive-all').innerText = `${isArchivePage ? 'Una' : 'A'}rchive all conversations`;
+    document.getElementById('archive-first').innerText = `${isArchivePage ? 'Una' : 'A'}rchive the first conversation`;
+
+      document.getElementById('archive-first').addEventListener('click', () => {
         chrome.scripting.executeScript({
           target: { tabId: tabs[0].id },
           func: () => archiveConversation(0)
         });
       });
 
-      document.getElementById('archive-all').addEventListener('click', (element) => {
+      document.getElementById('archive-all').addEventListener('click', () => {
         chrome.scripting.executeScript({
           target: { tabId: tabs[0].id },
           func: () => archiveAllConversations()
@@ -22,4 +26,7 @@ window.addEventListener('load', (event) => {
       });
     }
   );
+
+  chrome.browserAction.onClicked.addListener(() => {
+  });
 });
