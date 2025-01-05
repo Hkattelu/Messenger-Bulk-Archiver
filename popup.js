@@ -1,11 +1,14 @@
-window.addEventListener('load', (evnt) => {
-  chrome.tabs.query(
-    { active: true, currentWindow: true }, (tabs) => {
-      // Load helper functions
-      chrome.scripting.executeScript({
-        target: { tabId: tabs[0].id },
-        files: ['helpers.js']
-      });
+window.addEventListener('load', () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (!tabs[0].url.includes('messenger.com')) {
+      return;
+    }
+
+    // Load helper functions
+    chrome.scripting.executeScript({
+      target: { tabId: tabs[0].id },
+      files: ['helpers.js']
+    });
 
     const isArchivePage = tabs[0].url.includes('archived');
     document.getElementById('archive-all').innerText = `${isArchivePage ? 'Una' : 'A'}rchive all conversations`;
@@ -26,7 +29,4 @@ window.addEventListener('load', (evnt) => {
       });
     }
   );
-
-  chrome.browserAction.onClicked.addListener(() => {
-  });
 });
