@@ -1,6 +1,17 @@
+const MESSENGER_DOMAIN = 'messenger.com';
+
 window.addEventListener('load', () => {
+  chrome.tabs.onUpdated.addListener((_, changeInfo, tab) => {
+    if (!changeInfo.url && changeInfo.status !== 'complete') {
+      return;
+    }
+
+    const isMessenger = tab.url?.includes(MESSENGER_DOMAIN) ?? false;
+    isMessenger ? chrome.action.enable() : chrome.action.disable();
+  });
+
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (!tabs[0].url.includes('messenger.com')) {
+    if (!tabs[0].url.includes(MESSENGER_DOMAIN)) {
       return;
     }
 
