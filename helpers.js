@@ -18,8 +18,8 @@ function getConversationList() {
   return rows;
 }
 
-function openConversationActionMenuForConversation(index, retryCount = 0) {
-  const chatItem = getConversationList()[index];
+function openConversationActionMenuForConversation(indexOrElement, retryCount = 0) {
+  const chatItem = typeof indexOrElement === 'number' ? getConversationList()[indexOrElement] : indexOrElement;
 
   const event = new MouseEvent('mouseover', { bubbles: true, cancelable: true });
   chatItem.dispatchEvent(event);
@@ -34,7 +34,7 @@ function openConversationActionMenuForConversation(index, retryCount = 0) {
       }
 
       if (retryCount < 3) {
-        openConversationActionMenuForConversation(index, retryCount + 1)
+        openConversationActionMenuForConversation(indexOrElement, retryCount + 1)
           .then(resolve)
           .catch(reject);
       } else {
@@ -47,8 +47,8 @@ function openConversationActionMenuForConversation(index, retryCount = 0) {
   return menuOpenedPromise;
 }
 
-async function archiveConversation(index) {
-  await openConversationActionMenuForConversation(index);
+async function archiveConversation(indexOrElement) {
+  await openConversationActionMenuForConversation(indexOrElement);
   const menuOptions = Array.from(getConversationActionMenuItems());
 
   // We will target based on the archive icon svg path.
@@ -69,7 +69,7 @@ async function archiveAllConversations() {
   while (conversationList.length > 0 && failedAttempts < 3) {
     try {
       conversationList[0].scrollIntoView();
-      await archiveConversation(0);
+      await archiveConversation(conversationList[0]);
       failedAttempts = 0; // Reset failed attempts on success
     } catch (error) {
       failedAttempts++;
