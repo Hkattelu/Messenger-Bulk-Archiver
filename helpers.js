@@ -1,3 +1,5 @@
+let cachedChatsContainer = null;
+
 function getConversationActionMenuItems() {
   const menu = document.querySelectorAll('div[role="menu"] [role="menuitem"]');
   if (!menu) {
@@ -7,11 +9,14 @@ function getConversationActionMenuItems() {
 }
 
 function getConversationList() {
-  const chatsContainer = document.querySelector('div[aria-label="Chats"]');
-  if (!chatsContainer) {
+  if (!cachedChatsContainer || !cachedChatsContainer.isConnected) {
+    cachedChatsContainer = document.querySelector('div[aria-label="Chats"]');
+  }
+
+  if (!cachedChatsContainer) {
     throw new Error('Chats container not found. Make sure you are on messenger.com');
   }
-  const rows = chatsContainer.querySelectorAll('[role=row]');
+  const rows = cachedChatsContainer.querySelectorAll('[role=row]');
   if (!rows || rows.length === 0) {
     throw new Error('No conversations found');
   }
