@@ -30,22 +30,22 @@ function openConversationActionMenuForConversation(indexOrElement, retryCount = 
   chatItem.dispatchEvent(event);
 
   const menuOpenedPromise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const menuButton = chatItem.querySelector('div[aria-label="Menu"]');
-      if (menuButton) {
-        menuButton.click();
-        setTimeout(resolve, 100);
-        return;
-      }
+   setTimeout(() => {
+     const menuButton = chatItem.querySelector('div[aria-controls="thread-list-menu-buttons"]');
+     if (menuButton) {
+       menuButton.click();
+       setTimeout(resolve, 200);
+       return;
+     }
 
-      if (retryCount < 3) {
-        openConversationActionMenuForConversation(indexOrElement, retryCount + 1)
-          .then(resolve)
-          .catch(reject);
-      } else {
-        reject(new Error('Menu button not found'));
-      }
-    }, 100);
+     if (retryCount < 3) {
+       openConversationActionMenuForConversation(indexOrElement, retryCount + 1)
+         .then(resolve)
+         .catch(reject);
+     } else {
+       reject(new Error('Menu button not found'));
+     }
+   }, 200);
   })
 
 
@@ -64,7 +64,7 @@ async function archiveConversation(indexOrElement) {
   }
 
   archiveButton.click();
-  return new Promise(resolve => setTimeout(resolve, 75));
+  return new Promise(resolve => setTimeout(resolve, 150));
 }
 
 async function archiveAllConversations() {
